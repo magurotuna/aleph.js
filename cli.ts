@@ -185,6 +185,7 @@ async function run(command: string, options: RunOptions) {
     "run",
     "--allow-env",
     "--allow-net",
+    "--allow-import",
     "--allow-read=" + rwDirs.join(","),
     "--allow-write=" + rwDirs.join(","),
     "--allow-run=" + `${esbuildBinPath},wasm-pack`,
