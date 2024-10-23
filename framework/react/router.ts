@@ -11,7 +11,7 @@ import { DataProvider, type RouteData } from "./data.ts";
 import { Err, ErrorBoundary } from "./error.ts";
 
 // deno-lint-ignore no-explicit-any
-const global = window as any;
+const global = globalThis as any;
 
 export type SSRContext = {
   readonly url: URL;
@@ -421,7 +421,7 @@ function getLoadingBarEl(): HTMLDivElement {
     global.__LOADING_BAR_CLEANUP();
     global.__LOADING_BAR_CLEANUP = null;
   }
-  let bar = (document.getElementById("loading-bar") as HTMLDivElement | null);
+  let bar = document.getElementById("loading-bar") as HTMLDivElement | null;
   if (!bar) {
     bar = document.createElement("div");
     bar.id = "loading-bar";
