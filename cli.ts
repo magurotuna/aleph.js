@@ -2,6 +2,7 @@ import { parse } from "https://deno.land/std@0.142.0/flags/mod.ts";
 import { readLines } from "https://deno.land/std@0.142.0/io/mod.ts";
 import { writeAll } from "https://deno.land/std@0.142.0/streams/conversion.ts";
 import { basename, resolve } from "https://deno.land/std@0.142.0/path/mod.ts";
+import { greaterOrEqual as semverGreaterOrEqual, parse as semverParse } from "jsr:@std/semver@1.0.3";
 import { parseImportMap } from "./server/helpers.ts";
 import { findFile } from "./lib/fs.ts";
 import log, { bold, dim, stripColor } from "./lib/log.ts";
@@ -180,12 +181,13 @@ async function run(command: string, options: RunOptions) {
     esbuildBinDir,
     ".",
   ].filter(Boolean);
+  const isDeno2 = semverGreaterOrEqual(semverParse(Deno.version.deno), semverParse("2.0.0"));
   const cmd = [
     Deno.execPath(),
     "run",
     "--allow-env",
     "--allow-net",
-    "--allow-import",
+    isDeno2 && "--allow-import", // Deno 1.x doesn't recognize `--allow-import`
     "--allow-read=" + rwDirs.join(","),
     "--allow-write=" + rwDirs.join(","),
     "--allow-run=" + `${esbuildBinPath},wasm-pack`,
