@@ -20,9 +20,6 @@ export default {
     const p = s.slice(0, 8).toLowerCase();
     return p === "https://" || p.slice(0, 7) === "http://";
   },
-  isJsrURL(s: string): boolean {
-    return s.startsWith("jsr:");
-  },
   startsWithAny(str: string, ...prefixs: string[]) {
     for (const prefix of prefixs) {
       if (str.startsWith(prefix)) {
