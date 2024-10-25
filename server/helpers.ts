@@ -4,7 +4,7 @@ import { createGenerator, type UnoGenerator } from "../lib/@unocss/core.ts";
 import { findFile } from "../lib/fs.ts";
 import log from "../lib/log.ts";
 import util from "../lib/util.ts";
-import { isCanary, VERSION } from "../version.ts";
+import { isCanary, PKG_NAME, VERSION } from "../version.ts";
 import type { AlephConfig, ImportMap, JSXConfig, ModuleLoader } from "./types.ts";
 
 export const regFullVersion = /@\d+\.\d+\.\d+/;
@@ -47,8 +47,7 @@ export function getAlephPkgUri(): string {
     if (DEV_PORT) {
       return `http://localhost:${DEV_PORT}`;
     }
-    const version = Deno.env.get("ALEPH_VERSION") || VERSION;
-    return `https://deno.land/x/${isCanary ? "aleph_canary" : "aleph"}@${version}`;
+    return `https://deno.land/x/${PKG_NAME}@${VERSION}`;
   });
 }
 
